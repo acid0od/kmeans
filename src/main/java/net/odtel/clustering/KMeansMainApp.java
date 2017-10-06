@@ -9,6 +9,7 @@ package net.odtel.clustering;
 
 import smile.clustering.KMeans;
 import smile.plot.*;
+import smile.plot.Label;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,12 +33,18 @@ public class KMeansMainApp extends Clustering {
     @Override
     public JComponent learn() {
         long clock = System.currentTimeMillis();
-        KMeans kmeans = new KMeans(dataset[datasetIndex], clusterNumber, 100, 4);
+        KMeans kmeans = new KMeans(dataset[datasetIndex], clusterNumber, 100, 10);
         System.out.format("K-Means clusterings %d samples in %dms\n", dataset[datasetIndex].length, System.currentTimeMillis() - clock);
 
         PlotPanel panel = new PlotPanel();
 
         PlotCanvas plot = ScatterPlot.plot(dataset[datasetIndex], kmeans.getClusterLabel(), pointLegend, Palette.COLORS);
+
+        for(int i = 0; i < labels.length; i++) {
+
+            Label label = new Label(Integer.toString(i+1), 0, 1, 0, dataset[datasetIndex][i]);
+            plot.add(label);
+        }
 
 /*
         double[] x  = new double[5000];
@@ -55,7 +62,7 @@ public class KMeansMainApp extends Clustering {
 );
 */
 
-        plot.points(kmeans.centroids(), '@');
+        plot.points(kmeans.centroids(), 'S');
         panel.add(plot);
 
 /*        double[][] data = new double[100][3];
