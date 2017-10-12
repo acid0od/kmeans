@@ -9,6 +9,7 @@ package net.odtel.clustering;
 
 import smile.data.AttributeDataset;
 import smile.data.parser.DelimitedTextParser;
+import smile.plot.PlotCanvas;
 import smile.plot.ScatterPlot;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ public abstract class Clustering extends JPanel implements Runnable, ActionListe
     private static final int LEN = 2;
     private static final int X = 0;
     private static final int Y = 1;
+    private static final int Z = 2;
     private static final int RESOLUTION = 300;
 
     private static final String ERROR = "Error";
@@ -258,11 +260,12 @@ public abstract class Clustering extends JPanel implements Runnable, ActionListe
             while ((line = reader.readLine()) != null) {
                 lines.add(line);
                 String[] pointString = line.split("[\t ]+");
-                double[] point = new double[2];
+                double[] point = new double[3];
                 point[X] = Double.parseDouble(pointString[X].trim());
                 point[Y] = Double.parseDouble(pointString[Y].trim());
-                String label = pointString[2].trim();
-                System.out.println(point[X] + ", " + point[Y] + ", " + label);
+                point[Z] = Double.parseDouble(pointString[Z].trim());
+                String label = pointString[3].trim();
+                System.out.println(point[X] + ", " + point[Y] + ", " + point[Z] + "," + label);
                 l.add(label);
                 points.add(point);
                 if (point[X] < minmaxlens[MIN][X]) {
