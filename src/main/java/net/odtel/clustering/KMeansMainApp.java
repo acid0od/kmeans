@@ -8,8 +8,8 @@
 package net.odtel.clustering;
 
 import smile.clustering.KMeans;
-import smile.plot.*;
 import smile.plot.Label;
+import smile.plot.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +20,20 @@ public class KMeansMainApp extends Clustering {
     }
 
     public static void main(String argv[]) {
+        try {
+            // Set System L&F
+            UIManager.setLookAndFeel(
+                    UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
+        }
+
         Clustering demo = new KMeansMainApp();
         JFrame f = new JFrame("K-Means");
         f.setSize(new Dimension(1000, 1000));
@@ -40,43 +54,15 @@ public class KMeansMainApp extends Clustering {
 
         PlotCanvas plot = ScatterPlot.plot(dataset[datasetIndex], kmeans.getClusterLabel(), pointLegend, Palette.COLORS);
 
-        for(int i = 0; i < labels.length; i++) {
+        for (int i = 0; i < labels.length; i++) {
 
-            Label label = new Label(Integer.toString(i+1), 0, 1, 0, dataset[datasetIndex][i]);
+            Label label = new Label(Integer.toString(i + 1), 0, 1, 0, dataset[datasetIndex][i]);
             plot.add(label);
         }
-
-/*
-        double[] x  = new double[5000];
-        for (int j = 0; j < x.length; j++) {
-            x[j] = Math.random();
-        }
-
-        double[] y  = new double[500];
-        for (int j = 0; j < y.length; j++) {
-            y[j] = j / 500.0;
-}
-
-        PlotCanvas plot = QQPlot.plot(x, y */
-/*, kmeans.getClusterLabel(), pointLegend, Palette.COLORS*//*
-);
-*/
 
         plot.points(kmeans.centroids(), 'S');
         panel.add(plot);
 
-/*        double[][] data = new double[100][3];
-        for (int j = 0; j < data.length; j++) {
-            data[j][0] = Math.random();
-            data[j][1] = Math.random();
-            data[j][2] = Math.random();
-        }
-
-        PlotCanvas canvas3d = ScatterPlot.plot(data);
-        canvas3d.setTitle("3D Scatter Plot");
-        add(canvas3d);
-
-        panel.add(canvas3d);*/
         return panel;
     }
 
